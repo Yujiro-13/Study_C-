@@ -2,6 +2,8 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include "structs.hpp"
+#include "setup_parameter.hpp"
 
 class Base_task{    // base class    タスクを作るときはこのクラスを継承する
     public:
@@ -24,7 +26,7 @@ class Base_task{    // base class    タスクを作るときはこのクラス�
 
 class Search_task : public Base_task{
     public:
-        Search_task(uint8_t m_num);
+        Search_task();
         virtual int main_task_1() override;
         virtual int search() override;
     
@@ -38,21 +40,20 @@ class Search_task : public Base_task{
 
 class Run_task : public Base_task{
     public:
-        Run_task(uint8_t m_num);
+        Run_task();
         virtual int main_task_1() override;
         virtual int run() override;
     
     protected:
-        float vel;
-        float acc;
-        float ang_vel;
-        float max_vel;
-        float end_vel;
+        float I_tar_ang_vel = 0;
+        float I_ang_vel = 0;
+        float I_tar_vel = 0;
+        float I_vel = 0;
 };
 
 class Turn_task : public Base_task{
     public:
-        Turn_task(uint8_t m_num);
+        Turn_task();
         virtual int main_task_1() override;
         virtual int turn() override;
     
@@ -65,7 +66,7 @@ class Turn_task : public Base_task{
 
 class Back_task : public Base_task{
     public:
-        Back_task(uint8_t m_num);
+        Back_task();
         virtual int main_task_1() override;
         virtual int back() override;
     
@@ -79,7 +80,7 @@ class Back_task : public Base_task{
 
 class Slalom_task : public Base_task{
     public:
-        Slalom_task(uint8_t m_num);
+        Slalom_task();
         virtual int main_task_1() override;
         virtual int slalom() override;
     
@@ -93,7 +94,7 @@ class Slalom_task : public Base_task{
 
 class Log_task : public Base_task{
     public:
-        Log_task(uint8_t m_num);
+        Log_task();
         virtual int main_task_1() override;
         virtual int log() override;
     
@@ -140,7 +141,7 @@ int Base_task::log() { return 0; }
 
 
 
-Search_task::Search_task(uint8_t m_num) : Base_task() {}
+Search_task::Search_task() : Base_task() {}
 
 int Search_task::main_task_1() {
     run();
@@ -156,9 +157,30 @@ int Search_task::search() {
     return 0;
 }
 
-Run_task::Run_task(uint8_t m_num) : Base_task() {}
+Run_task::Run_task() : Base_task() {}
 
-int Run_task::main_task_1() {
+int Run_task::main_task_1() {   //  初期化する変数が多いため、0で初期化する変数はクラスのprotected内に変数を作り初期化、それ以外はsetupparameterで初期化したものを使用する
+    t_control* m;                //  と思ったけど、vel.tar.Iなど0で初期化するやつも制御の処理で使うため再検討
+    t_wall_sens* sens;
+    t_motion* p;
+
+    m->I.tar.vel = 0;
+    m->I.vel = 0;
+    m->I.tar.ang_vel = 0;
+    m->I.ang_vel = 0;
+    m->I.tar.deg = 0;
+    m->I.deg = 0;
+
+    sens->enable = TRUE;
+
+    while (p->len)
+    {
+        /* code */
+    }
+    
+
+
+
     std::cout << "main_task_1 : Run" << std::endl;
     return 0;
 }
@@ -168,7 +190,7 @@ int Run_task::run() {
     return 0;
 }
 
-Turn_task::Turn_task(uint8_t m_num) : Base_task() {}
+Turn_task::Turn_task() : Base_task() {}
 
 int Turn_task::main_task_1() {
     std::cout << "main_task_1 : Turn" << std::endl;
@@ -180,7 +202,7 @@ int Turn_task::turn() {
     return 0;
 }
 
-Back_task::Back_task(uint8_t m_num) : Base_task() {}
+Back_task::Back_task() : Base_task() {}
 
 int Back_task::main_task_1() {
     std::cout << "main_task_1 : Back" << std::endl;
@@ -192,7 +214,7 @@ int Back_task::back() {
     return 0;
 }
 
-Slalom_task::Slalom_task(uint8_t m_num) : Base_task() {}
+Slalom_task::Slalom_task() : Base_task() {}
 
 int Slalom_task::main_task_1() {
     std::cout << "main_task_1 : Slalom" << std::endl;
@@ -204,7 +226,7 @@ int Slalom_task::slalom() {
     return 0;
 }
 
-Log_task::Log_task(uint8_t m_num) : Base_task() {}
+Log_task::Log_task() : Base_task() {}
 
 int Log_task::main_task_1() {
     std::cout << "main_task_1 : Log" << std::endl;
@@ -223,15 +245,14 @@ void Set::call_main_task_1(Base_task *task){    //  ポインタを引数に取�
 std::vector<std::shared_ptr<Base_task>> setmode;    //  ポインタの配列を作成
 
 void Set::set_main_task_1(uint8_t _mode){    //  使用可能な処理を登録（LEDで表現できる数の最大数を引数とする）
-    uint8_t num = 0;
     
 
-    setmode.push_back(std::make_shared<Search_task>(num));  //  ポインタを配列に追加（使用する処理の数だけ。最大数に気を付けて）
-    setmode.push_back(std::make_shared<Run_task>(num));
-    setmode.push_back(std::make_shared<Turn_task>(num));
-    setmode.push_back(std::make_shared<Back_task>(num));
-    setmode.push_back(std::make_shared<Slalom_task>(num));
-    setmode.push_back(std::make_shared<Log_task>(num));
+    setmode.push_back(std::make_shared<Search_task>());  //  ポインタを配列に追加（使用する処理の数だけ。最大数に気を付けて）
+    setmode.push_back(std::make_shared<Run_task>());
+    setmode.push_back(std::make_shared<Turn_task>());
+    setmode.push_back(std::make_shared<Back_task>());
+    setmode.push_back(std::make_shared<Slalom_task>());
+    setmode.push_back(std::make_shared<Log_task>());
     
     std::cout << "setmode" << std::endl;
 }
@@ -257,3 +278,4 @@ int  main(){
 
     return 0;
 }
+
