@@ -25,3 +25,10 @@ void set_struct_ptr(){
     std::cout << "ab.a = " << (*ab).a << std::endl;
     cp_struct_ptr(ab);
 }
+
+void set_struct_ptr_allow(){
+    y.a = w;
+    ab = &y;
+    std::cout << "ab.a = " << ab->a << std::endl;
+    cp_struct_ptr_allow(ab);
+}

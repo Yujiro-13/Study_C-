@@ -10,6 +10,7 @@ int main(){;
 
     set_ptr();
     set_struct_ptr();
+    set_struct_ptr_allow();
     //ptr2 = cp_ptr();
 
     //std::cout << *ptr1 << std::endl;

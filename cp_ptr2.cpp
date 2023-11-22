@@ -27,3 +27,12 @@ void cp_struct_ptr(t_ab *ab){
     
     return;
 }
+
+void cp_struct_ptr_allow(t_ab *ab){
+    xy = ab;
+    
+    std::cout << "ab.a = " << ab->a << std::endl;
+    std::cout << "xy.a = " << xy->a << std::endl;
+    
+    return;
+}
