@@ -15,6 +15,7 @@ t_ab y;
 
 void set_ptr(){
     ptr1 = &x;
+    std::cout << "&ptr1 = " << ptr1 << std::endl;
     std::cout << "ptr1 = " << *ptr1 << std::endl;
     cp_ptr(ptr1);
 }
@@ -22,6 +23,7 @@ void set_ptr(){
 void set_struct_ptr(){
     y.a = w;
     ab = &y;
+    std::cout << "&ab = " << ab << std::endl;
     std::cout << "ab.a = " << (*ab).a << std::endl;
     cp_struct_ptr(ab);
 }

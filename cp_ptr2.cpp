@@ -14,6 +14,7 @@ int cp_ptr(int *ptr1){
     ptr2 = ptr1;
     
     std::cout << "ptr1 = " << *ptr1 << std::endl;
+    std::cout << "&ptr2 = " << ptr2 << std::endl;
     std::cout << "ptr2 = " << *ptr2 << std::endl;
     
     return *ptr2;
@@ -23,6 +24,7 @@ void cp_struct_ptr(t_ab *ab){
     xy = ab;
     
     std::cout << "ab.a = " << (*ab).a << std::endl;
+    std::cout << "&xy = " << xy << std::endl;
     std::cout << "xy.a = " << (*xy).a << std::endl;
     
     return;
