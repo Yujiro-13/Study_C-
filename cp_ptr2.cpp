@@ -3,13 +3,14 @@
 #include <memory>
 
 
+int *ptr2;
 
 
-
-int func(){
-    int x = 100;
-    int *ptr1 = &x; //  ポインタptr1にxのアドレスを代入
-    std::cout << *ptr1 << std::endl;
+int cp_ptr(int *ptr1){
+    ptr2 = ptr1;
     
-    return *ptr1;
+    std::cout << *ptr1 << std::endl;
+    std::cout << *ptr2 << std::endl;
+    
+    return *ptr2;
 }
