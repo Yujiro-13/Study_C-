@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 #include "structs.hpp"
-#include "setup_parameter.hpp"
+//#include "Base_task.hpp"
 
 class Base_task{    // base class    タスクを作るときはこのクラスを継承する
     public:
@@ -17,9 +17,20 @@ class Base_task{    // base class    タスクを作るときはこのクラス�
         virtual int back();
         virtual int slalom();
         virtual int log();
+        //virtual void setupParameter();
+        void cp_tar(std::shared_ptr<t_motion_val> v);
+        void cp_param(std::shared_ptr<t_motion> m);
+        void cp_pid(std::shared_ptr<t_control> c);
+        void cp_wall_th(std::shared_ptr<t_wall_sens> s);
+
 
     protected:
         int m_mode;
+        std::shared_ptr<t_motion> set_m;
+        std::shared_ptr<t_motion_val> set_v;
+        std::shared_ptr<t_control> set_c;
+        std::shared_ptr<t_wall_sens> set_s;
+        
 
 };
 
@@ -29,6 +40,7 @@ class Search_task : public Base_task{
         Search_task();
         virtual int main_task_1() override;
         virtual int search() override;
+        
     
     protected:
         float vel;
@@ -49,6 +61,13 @@ class Run_task : public Base_task{
         float I_ang_vel = 0;
         float I_tar_vel = 0;
         float I_vel = 0;
+        float vel;
+        float ang_vel;
+        float deg;
+        t_motion* m;
+        t_control* c;
+        t_wall_sens* s;
+        t_motion_val* v;
 };
 
 class Turn_task : public Base_task{
@@ -111,8 +130,17 @@ class Set { //set task
         void call_main_task_1(Base_task *task);
         void set_main_task_1(uint8_t _mode);
         void get_main_task_1(uint8_t _mode_num);
+        void set_param(Base_task *task);
     private:
         uint8_t max_mode_num = 8;
+        std::shared_ptr<t_motion> param;
+        std::shared_ptr<t_motion_val> val;
+        std::shared_ptr<t_control> ctl;
+        std::shared_ptr<t_wall_sens> sens;
+        /*t_motion* _param;
+        t_motion_val* _val;
+        t_control* _ctl;
+        t_wall_sens* _sens;*/
 };
 
 
@@ -138,6 +166,23 @@ int Base_task::slalom() { return 0; }
 
 int Base_task::log() { return 0; }
 
+void Base_task::cp_param(std::shared_ptr<t_motion> m){
+    set_m = m;
+}
+
+void Base_task::cp_tar(std::shared_ptr<t_motion_val> v){
+    set_v = v;
+}
+
+void Base_task::cp_pid(std::shared_ptr<t_control> c){
+    set_c = c;
+}
+
+void Base_task::cp_wall_th(std::shared_ptr<t_wall_sens> s){
+    set_s = s;
+}
+
+
 
 
 
@@ -160,26 +205,24 @@ int Search_task::search() {
 Run_task::Run_task() : Base_task() {}
 
 int Run_task::main_task_1() {   //  初期化する変数が多いため、0で初期化する変数はクラスのprotected内に変数を作り初期化、それ以外はsetupparameterで初期化したものを使用する
-    t_control* m;                //  と思ったけど、vel.tar.Iなど0で初期化するやつも制御の処理で使うため再検討
-    t_wall_sens* sens;
-    t_motion* p;
-
-    m->I.tar.vel = 0;
-    m->I.vel = 0;
-    m->I.tar.ang_vel = 0;
-    m->I.ang_vel = 0;
-    m->I.tar.deg = 0;
-    m->I.deg = 0;
-
-    sens->enable = TRUE;
-
-    while (p->len)
-    {
-        /* code */
-    }
     
 
+   /* c->I.tar.vel = 0;
+    v->sum.vel = 0;
+    c->I.tar.ang_vel = 0;
+    v->sum.ang_vel = 0;
+    c->I.tar.deg = 0;
+    v->sum.deg = 0;*/
 
+    //s->enable = TRUE;
+
+    /*while ((v->tar.len - 10) > 1000.0 * ((v->tar.vel)*(v->tar.vel) - (v->end.vel)*(v->end.vel) / (2.0 * m->acc)))
+    {
+        
+    }*/
+    std::cout << set_v->tar.len << std::endl;
+    std::cout << set_v->tar.vel << std::endl;
+    std::cout << set_m->acc << std::endl;
 
     std::cout << "main_task_1 : Run" << std::endl;
     return 0;
@@ -238,9 +281,7 @@ int Log_task::log() {
     return 0;
 }
 
-void Set::call_main_task_1(Base_task *task){    //  ポインタを引数に取る
-    task->main_task_1();    //  ポインタのメンバ関数を呼び出す（実行する関数の呼び出し）
-}
+
 
 std::vector<std::shared_ptr<Base_task>> setmode;    //  ポインタの配列を作成
 
@@ -262,16 +303,75 @@ void Set::get_main_task_1(uint8_t _mode_num){
     Set set;
     set.set_main_task_1(max_mode_num);
     std::cout << "get_main_task_1" << std::endl;
+    set.set_param(setmode[_mode_num].get());
     set.call_main_task_1(setmode[_mode_num].get());    //  ポインタの配列の中から、引数で指定した番号のポインタを呼び出す
+    
     
 }
 
+void Set::set_param(Base_task *task){
+
+    //Base_task task;
+
+    param = std::make_shared<t_motion>();
+    val = std::make_shared<t_motion_val>();
+    ctl = std::make_shared<t_control>();
+    sens = std::make_shared<t_wall_sens>();
+
+    param->acc = 1.0;
+    param->ang_acc = 0;
+    val->tar.vel = 0.3;
+    val->tar.ang_vel = 0;
+    val->tar.deg = 0;
+    val->tar.len = 90;
+    ctl->v.Kp = 0;
+    ctl->v.Ki = 0;
+    ctl->v.Kd = 0;
+    ctl->o.Kp = 0;
+    ctl->o.Ki = 0;
+    ctl->o.Kd = 0;
+    ctl->d.Kp = 0;
+    ctl->d.Ki = 0;
+    ctl->d.Kd = 0;
+    ctl->wall.Kp = 0;
+    sens->th_wall.fl = 0;
+    sens->th_wall.fr = 0;
+    sens->th_wall.l = 0;
+    sens->th_wall.r = 0;
+    sens->th_control.l = 0;
+    sens->th_control.r = 0;
+
+    /*_param = &param;
+    _val = &val;
+    _ctl = &pid;
+    _sens = &sens;*/
+
+    
+    task->cp_param(param);
+    task->cp_tar(val);
+    task->cp_pid(ctl);
+    task->cp_wall_th(sens);
+
+    std::cout << "set_param" << std::endl;
+}
+
+void Set::call_main_task_1(Base_task *task){    //  ポインタを引数に取る
+    
+    task->main_task_1();    //  ポインタのメンバ関数を呼び出す（実行する関数の呼び出し）
+    
+
+}
+
 int  main(){
+    Set set;
     int _mode;
+    //setupParameter(&m,&c,&w,&v);
+
+    
     std::cout << "Enter the number of mode" << std::endl;
     std::cin >> _mode;
 
-    Set set;
+   
     set.get_main_task_1(_mode);
 
     std::cout << "Finish" << std::endl;
