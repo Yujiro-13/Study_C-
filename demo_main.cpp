@@ -137,10 +137,7 @@ class Set { //set task
         std::shared_ptr<t_motion_val> val;
         std::shared_ptr<t_control> ctl;
         std::shared_ptr<t_wall_sens> sens;
-        /*t_motion* _param;
-        t_motion_val* _val;
-        t_control* _ctl;
-        t_wall_sens* _sens;*/
+        
 };
 
 
@@ -166,7 +163,7 @@ int Base_task::slalom() { return 0; }
 
 int Base_task::log() { return 0; }
 
-void Base_task::cp_param(std::shared_ptr<t_motion> m){
+void Base_task::cp_param(std::shared_ptr<t_motion> m){  //  ポインタをコピー
     set_m = m;
 }
 
@@ -303,15 +300,13 @@ void Set::get_main_task_1(uint8_t _mode_num){
     Set set;
     set.set_main_task_1(max_mode_num);
     std::cout << "get_main_task_1" << std::endl;
-    set.set_param(setmode[_mode_num].get());
+    set.set_param(setmode[_mode_num].get());    //  パラメータを設定
     set.call_main_task_1(setmode[_mode_num].get());    //  ポインタの配列の中から、引数で指定した番号のポインタを呼び出す
     
     
 }
 
 void Set::set_param(Base_task *task){
-
-    //Base_task task;
 
     param = std::make_shared<t_motion>();
     val = std::make_shared<t_motion_val>();
@@ -340,11 +335,6 @@ void Set::set_param(Base_task *task){
     sens->th_wall.r = 0;
     sens->th_control.l = 0;
     sens->th_control.r = 0;
-
-    /*_param = &param;
-    _val = &val;
-    _ctl = &pid;
-    _sens = &sens;*/
 
     
     task->cp_param(param);
