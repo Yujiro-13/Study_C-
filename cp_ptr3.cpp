@@ -8,7 +8,7 @@
 
 int x = 100;
 int *ptr1; //  ポインタptr1にxのアドレスを代入
-int w = 200;
+int w = 300;
 t_ab *ab;
 t_ab y;
 
@@ -29,7 +29,8 @@ void set_struct_ptr(){
 }
 
 void set_struct_ptr_allow(){
-    y.a = w;
+    //y.a = w;
+    ab->a = w;  //  ab->a = (*ab).a = y.a = w
     ab = &y;
     std::cout << "ab.a = " << ab->a << std::endl;
     cp_struct_ptr_allow(ab);
