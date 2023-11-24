@@ -59,6 +59,33 @@ typedef struct
     t_sens_dir diff_p_pulse;    
 }t_enc;     //encoder data
 
+typedef struct 
+{
+    float vel;  //velocity
+    float ang_vel;  //angular velocity
+    float deg;  //degree
+    float error; //error
+    float acc;  //acceleration
+    float ang_acc;  //angular acceleration
+    float len;   //length
+}t_motion;  //motion parameter
+
+typedef struct 
+{
+    float r;    //right
+    float l;    //left
+}t_motion_dir;  //motion direction
+
+
+typedef struct 
+{
+    t_motion_dir p;    //past
+    t_motion_dir n;    //new
+    t_motion max;  //max
+    t_motion end;   //end
+    t_motion tar;   //target
+    t_motion sum;   //sum
+}t_motion_val;    //motion value
 
 typedef struct 
 {
@@ -84,36 +111,8 @@ typedef struct
     t_pid d;    //degree pid
     t_pid wall; //wall pid
     t_motion_val I;    //integral
-    float c;    //current
 }t_control; //control parameter
 
-typedef struct 
-{
-    float r;    //right
-    float l;    //left
-}t_motion_dir;  //motion direction
-
-
-typedef struct 
-{
-    t_motion_dir p;    //past
-    t_motion_dir n;    //new
-    float I;    //sum
-    float max;  //max
-    t_motion tar;   //target
-}t_motion_val;    //motion value
-
-
-typedef struct 
-{
-    float vel;  //velocity
-    float ang_vel;  //angular velocity
-    float deg;  //degree
-    float error; //error
-    float acc;  //acceleration
-    float ang_acc;  //angular acceleration
-    float len;   //length
-}t_motion;  //motion parameter
 
 typedef struct 
 {
@@ -136,6 +135,8 @@ typedef struct
     float y;
 }t_odom;    //odometry data
 
+void setupParameter(t_motion*, t_control*, t_wall_sens*, t_motion_val*);
 
 
-#endif
+
+#endif  //  STRUCTS_HPP

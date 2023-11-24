@@ -152,7 +152,7 @@ int Base_task::slalom() { return 0; }
 
 int Base_task::log() { return 0; }
 
-void Base_task::cp_param(t_motion* m) { set_m = m; }
+void Base_task::cp_param(t_motion* m) { set_m = m; }    //  ポインタをコピー  *m = &param => set_m = m
 
 void Base_task::cp_tar(t_motion_val* v) { set_v = v; }
 
