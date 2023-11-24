@@ -76,12 +76,11 @@ void Set::call_main_task_1(Base_task *task){    //  ポインタを引数に取�
 
 }
 
-void Set::get_main_task_1(uint8_t _mode_num){
-    Set set;
-    set.set_main_task_1(max_mode_num);
+Base_task* Set::get_main_task_1(uint8_t _mode_num){
+    set_main_task_1(max_mode_num);
     std::cout << "get_main_task_1" << std::endl;
-    set.set_param(setmode[_mode_num].get());    //  パラメータを設定    main_task関数より先に呼ぶ
-    set.call_main_task_1(setmode[_mode_num].get());    //  ポインタの配列の中から、引数で指定した番号のポインタを呼び出す
+    set_param(setmode[_mode_num].get());    //  パラメータを設定    main_task関数より先に呼ぶ
+    call_main_task_1(setmode[_mode_num].get());    //  ポインタの配列の中から、引数で指定した番号のポインタを呼び出す
     
-    
+    return setmode[_mode_num].get();
 }

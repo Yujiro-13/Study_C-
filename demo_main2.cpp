@@ -179,6 +179,8 @@ int Search_task::search() {
 Run_task::Run_task() : Base_task() {}
 
 int Run_task::main_task_1() {
+
+    //s->enable = TRUE;
     std::cout << set_v->tar.len << std::endl;
     std::cout << set_v->tar.vel << std::endl;
     std::cout << set_m->acc << std::endl;

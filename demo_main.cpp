@@ -4,7 +4,7 @@
 #include <vector>
 #include "structs.hpp"
 //#include "demo_main.hpp"
-//#include "interupt.hpp"
+#include "interupt.hpp"
 #include "Set.hpp"
 
 
@@ -67,14 +67,17 @@ int Search_task::search() {
 Run_task::Run_task() : Base_task() {}
 
 int Run_task::main_task_1() {   //  初期化する変数が多いため、0で初期化する変数はクラスのprotected内に変数を作り初期化、それ以外はsetupparameterで初期化したものを使用する
-   
+    
 
     //s->enable = TRUE;
+    
+    
 
     std::cout << set_v->tar.len << std::endl;
     std::cout << set_v->tar.vel << std::endl;
     std::cout << set_m->acc << std::endl;
 
+    //Interupt->calc_target();
   
     /*while (((set_v->tar.len - 10) - set_m->len) > 1000.0 * (((set_v->tar.vel)*(set_v->tar.vel) - (set_v->end.vel)*(set_v->end.vel)) / (2.0 * 
     set_m->acc)))
@@ -145,15 +148,18 @@ int Log_task::log() {
 
 int  main(){
     Set set;
+    
     int _mode;
-    //setupParameter(&m,&c,&w,&v);
-
     
     std::cout << "Enter the number of mode" << std::endl;
     std::cin >> _mode;
 
    
-    set.get_main_task_1(_mode);
+    Base_task *task = set.get_main_task_1(_mode);
+
+    Interupt interupt(task);
+
+    interupt.calc_target();
 
     std::cout << "Finish" << std::endl;
 

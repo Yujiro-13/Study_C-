@@ -6,7 +6,7 @@
 #include <memory>
 #include <vector>
 #include "structs.hpp"
-#include "interupt.hpp"
+//#include "interupt.hpp"
 //#include "Set.hpp"
 
 class Base_task{    // base class    タスクを作るときはこのクラスを継承する
@@ -25,14 +25,15 @@ class Base_task{    // base class    タスクを作るときはこのクラス�
         void cp_param(std::shared_ptr<t_motion> m);
         void cp_pid(std::shared_ptr<t_control> c);
         void cp_wall_th(std::shared_ptr<t_wall_sens> s);
-
-
-    protected:
-        int m_mode;
         std::shared_ptr<t_motion> set_m;
         std::shared_ptr<t_motion_val> set_v;
         std::shared_ptr<t_control> set_c;
         std::shared_ptr<t_wall_sens> set_s;
+
+
+    protected:
+        int m_mode;
+
         
 
 };
@@ -67,11 +68,11 @@ class Run_task : public Base_task{
         float vel;
         float ang_vel;
         float deg;
-        t_motion* m;
-        t_control* c;
-        t_wall_sens* s;
-        t_motion_val* v;
-        Interupt *interupt;
+        t_motion* motion;
+        t_control* con;
+        t_wall_sens* sen;
+        t_motion_val* val;
+        //Interupt* interupt;
 };
 
 class Turn_task : public Base_task{
