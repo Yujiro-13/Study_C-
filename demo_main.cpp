@@ -70,14 +70,14 @@ int Run_task::main_task_1() {   //  初期化する変数が多いため、0で�
     
 
     //s->enable = TRUE;
-    
+    Interupt interupt(this);
     
 
-    std::cout << set_v->tar.len << std::endl;
-    std::cout << set_v->tar.vel << std::endl;
-    std::cout << set_m->acc << std::endl;
+    std::cout << "set_v->tar.len : " << set_v->tar.len << std::endl;
+    std::cout << "set_v->tar.val : " << set_v->tar.vel << std::endl;
+    std::cout << "set_m->acc : " << set_m->acc << std::endl;
 
-    //Interupt->calc_target();
+    interupt.calc_target();
   
     /*while (((set_v->tar.len - 10) - set_m->len) > 1000.0 * (((set_v->tar.vel)*(set_v->tar.vel) - (set_v->end.vel)*(set_v->end.vel)) / (2.0 * 
     set_m->acc)))
@@ -155,11 +155,11 @@ int  main(){
     std::cin >> _mode;
 
    
-    Base_task *task = set.get_main_task_1(_mode);
+    set.get_main_task_1(_mode);
 
-    Interupt interupt(task);
+    
 
-    interupt.calc_target();
+    //interupt.calc_target();
 
     std::cout << "Finish" << std::endl;
 

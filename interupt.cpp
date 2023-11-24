@@ -18,7 +18,9 @@ Interupt::~Interupt(){
 }
 void Interupt::calc_target(){
     //task->set_m->acc = 0.1;
-    std::cout << task->set_m->acc << std::endl;
+
+    std::cout << "task->set_v->tar.vel : " << task->set_v->tar.vel << std::endl;
+    std::cout << "task->set_m->acc : " << task->set_m->acc << std::endl;
     std::cout << "calc_target" << std::endl;
     return;
 }
