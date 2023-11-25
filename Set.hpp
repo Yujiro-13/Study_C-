@@ -5,9 +5,10 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include "Base_task.hpp"
+#include "Run_task.hpp" // 各タスクを追加
 #include "structs.hpp"
-#include "demo_main.hpp"
-#include "interupt.hpp"
+
 
 class Set { //set task
     public:
@@ -21,6 +22,7 @@ class Set { //set task
         std::shared_ptr<t_motion_val> val;
         std::shared_ptr<t_control> ctl;
         std::shared_ptr<t_wall_sens> sens;
+        std::shared_ptr<t_local_dir> dir;
         
 };
 

@@ -15,6 +15,7 @@ typedef enum
     RIGHT = 2,
     REAR = 3,
     UNKNOWN,
+    UNDEFINED,
 }t_local_dir;
 
 typedef struct 
@@ -65,15 +66,17 @@ typedef struct
     float ang_vel;  //angular velocity
     float deg;  //degree
     float error; //error
+    float ang_error;    //angular error
     float acc;  //acceleration
     float ang_acc;  //angular acceleration
     float len;   //length
+    t_local_dir flag;
 }t_motion;  //motion parameter
 
 typedef struct 
 {
-    float r;    //right
-    float l;    //left
+    t_motion r;    //right
+    t_motion l;    //left
 }t_motion_dir;  //motion direction
 
 
@@ -85,6 +88,7 @@ typedef struct
     t_motion end;   //end
     t_motion tar;   //target
     t_motion sum;   //sum
+    t_motion I;    //integral
 }t_motion_val;    //motion value
 
 typedef struct 
@@ -111,6 +115,8 @@ typedef struct
     t_pid d;    //degree pid
     t_pid wall; //wall pid
     t_motion_val I;    //integral
+    t_motion P;
+    float Vatt;
 }t_control; //control parameter
 
 

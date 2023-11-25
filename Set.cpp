@@ -18,8 +18,6 @@ void Set::set_main_task_1(uint8_t _mode){    //  使用可能な処理を登録�
 }
 
 
-
-
 void Set::set_param(Base_task *task){
 
     param = std::make_shared<t_motion>();
@@ -29,7 +27,7 @@ void Set::set_param(Base_task *task){
 
     param->acc = 1.0;
     param->ang_acc = 0;
-    val->tar.vel = 0.3;
+    val->tar.vel = 0.1;
     val->tar.ang_vel = 0;
     val->tar.deg = 0;
     val->tar.len = 90;
@@ -46,6 +44,8 @@ void Set::set_param(Base_task *task){
     ctl->d.Ki = 0;
     ctl->d.Kd = 0;
     ctl->wall.Kp = 0;
+    ctl->wall.Ki = 0;
+    ctl->wall.Kd = 0;
     sens->th_wall.fl = 0;
     sens->th_wall.fr = 0;
     sens->th_wall.l = 0;
@@ -54,11 +54,13 @@ void Set::set_param(Base_task *task){
     sens->th_control.r = 0;
 
     ctl->I.tar.vel = 0;
-    val->sum.vel = 0;
+    val->I.vel = 0;
     ctl->I.tar.ang_vel = 0;
-    val->sum.ang_vel = 0;
+    val->I.ang_vel = 0;
     ctl->I.tar.deg = 0;
-    val->sum.deg = 0;
+    val->I.deg = 0;
+
+    ctl->Vatt = 8.4;
 
     
     task->cp_param(param);
@@ -71,9 +73,7 @@ void Set::set_param(Base_task *task){
 
 void Set::call_main_task_1(Base_task *task){    //  ポインタを引数に取る
     
-    task->main_task_1();    //  ポインタのメンバ関数を呼び出す（実行する関数の呼び出し）
-    
-
+    task->main_task_1(dir);    //  ポインタのメンバ関数を呼び出す（実行する関数の呼び出し
 }
 
 void Set::get_main_task_1(uint8_t _mode_num){
