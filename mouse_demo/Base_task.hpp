@@ -47,80 +47,13 @@ class Base_task{    // base class    タスクを作るときはこのクラス�
 };
 
 
-class Search_task : public Base_task{
-    public:
-        Search_task();
-        virtual int main_task_1(std::shared_ptr<t_local_dir> l) override;
-        virtual int search() override;
-        
-    
-    protected:
-        float vel;
-        float acc;
-        float ang_vel;
-        float max_vel;
-        float end_vel;
-};
 
 
 
-class Turn_task : public Base_task{
-    public:
-        Turn_task();
-        virtual int main_task_1(std::shared_ptr<t_local_dir> l) override;
-        virtual int turn() override;
-    
-    protected:
-        float deg;
-        float ang_vel;
-        float max_ang_vel;
-        float end_ang_vel;
-        float local_deg;
-        //t_local_dir Turn_flag;
-};
 
-class Back_task : public Base_task{
-    public:
-        Back_task();
-        virtual int main_task_1(std::shared_ptr<t_local_dir> l) override;
-        virtual int back() override;
-    
-    protected:
-        float vel;
-        float acc;
-        float ang_vel;
-        float max_vel;
-        float end_vel;
-        
-};
 
-class Slalom_task : public Base_task{
-    public:
-        Slalom_task();
-        virtual int main_task_1(std::shared_ptr<t_local_dir> l) override;
-        virtual int slalom() override;
-    
-    protected:
-        float vel;
-        float acc;
-        float ang_vel;
-        float max_vel;
-        float end_vel;
-};
 
-class Log_task : public Base_task{
-    public:
-        Log_task();
-        virtual int main_task_1(std::shared_ptr<t_local_dir> l) override;
-        virtual int log() override;
-    
-    protected:
-        float vel;
-        float acc;
-        float ang_vel;
-        float max_vel;
-        float end_vel;
-};
+
 
 
 

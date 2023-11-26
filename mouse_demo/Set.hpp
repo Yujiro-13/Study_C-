@@ -6,7 +6,12 @@
 #include <memory>
 #include <vector>
 #include "Base_task.hpp"
+#include "Search_task.hpp"
 #include "Run_task.hpp" // 各タスクを追加
+#include "Turn_task.hpp"
+#include "Slalom_task.hpp"
+#include "Log_task.hpp"
+#include "Back_task.hpp"
 #include "structs.hpp"
 
 
