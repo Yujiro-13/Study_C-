@@ -73,7 +73,7 @@ void Set::set_param(Base_task *task){
 
 void Set::call_main_task_1(Base_task *task){    //  ポインタを引数に取る
     
-    task->main_task_1(dir);    //  ポインタのメンバ関数を呼び出す（実行する関数の呼び出し
+    task->main_task_1();    //  ポインタのメンバ関数を呼び出す（実行する関数の呼び出し
 }
 
 void Set::get_main_task_1(uint8_t _mode_num){

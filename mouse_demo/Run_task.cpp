@@ -3,10 +3,17 @@
 
 Run_task::Run_task() : Base_task() {}
 
-int Run_task::main_task_1(std::shared_ptr<t_local_dir> l) {
+int Run_task::main_task_1() {
     
+    std::cout << "main_task_1 : Run" << std::endl;
+    run();
+    return 0;
+    
+    
+}
 
-    
+int Run_task::run() {
+
     Interupt interupt(this);
     set_s->enable = TRUE;
 
@@ -45,11 +52,7 @@ int Run_task::main_task_1(std::shared_ptr<t_local_dir> l) {
     std::cout << "set_m->len : " << length << std::endl;
     
 
-    std::cout << "main_task_1 : Run" << std::endl;
-    return 0;
-}
-
-int Run_task::run() {
+    
     std::cout << "run" << std::endl;
     return 0;
 }

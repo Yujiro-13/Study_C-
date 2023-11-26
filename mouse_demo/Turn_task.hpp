@@ -11,8 +11,9 @@
 class Turn_task : public Base_task{
     public:
         Turn_task();
-        virtual int main_task_1(std::shared_ptr<t_local_dir> l) override;
-        virtual int turn() override;
+        virtual int main_task_1() override;
+        virtual int turn_left() override;
+        virtual int turn_right() override;
     
     protected:
         float deg;

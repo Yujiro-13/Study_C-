@@ -2,7 +2,7 @@
 
 Back_task::Back_task() : Base_task() {}
 
-int Back_task::main_task_1(std::shared_ptr<t_local_dir> l) {
+int Back_task::main_task_1() {
     std::cout << "main_task_1 : Back" << std::endl;
     return 0;
 }

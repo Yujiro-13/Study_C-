@@ -2,7 +2,7 @@
 
 Log_task::Log_task() : Base_task() {}
 
-int Log_task::main_task_1(std::shared_ptr<t_local_dir> l) {
+int Log_task::main_task_1() {
     std::cout << "main_task_1 : Log" << std::endl;
     return 0;
 }

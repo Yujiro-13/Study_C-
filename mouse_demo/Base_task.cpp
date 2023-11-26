@@ -5,7 +5,7 @@ Base_task::Base_task(){}
 
 Base_task::~Base_task() {}
 
-int Base_task::main_task_1(std::shared_ptr<t_local_dir> l) { return 0; }    //  方向定義をここで行う（仮）
+int Base_task::main_task_1() { return 0; }    //  方向定義をここで行う（仮）
 
 int Base_task::search() { return 0; }
 
@@ -13,7 +13,9 @@ int Base_task::run() { return 0; }
 
 int Base_task::stop() { return 0; }
 
-int Base_task::turn() { return 0; }
+int Base_task::turn_left() { return 0; }
+
+int Base_task::turn_right() { return 0; }
 
 int Base_task::back() { return 0; }
 

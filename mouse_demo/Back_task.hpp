@@ -11,7 +11,7 @@
 class Back_task : public Base_task{
     public:
         Back_task();
-        virtual int main_task_1(std::shared_ptr<t_local_dir> l) override;
+        virtual int main_task_1() override;
         virtual int back() override;
     
     protected:

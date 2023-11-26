@@ -13,11 +13,12 @@ class Base_task{    // base class    タスクを作るときはこのクラス�
     public:
         Base_task();
         virtual ~Base_task();
-        virtual int main_task_1(std::shared_ptr<t_local_dir> l);
+        virtual int main_task_1();
         virtual int search();
         virtual int run();
         virtual int stop();
-        virtual int turn();
+        virtual int turn_left();
+        virtual int turn_right();
         virtual int back();
         virtual int slalom();
         virtual int log();
