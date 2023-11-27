@@ -2,8 +2,8 @@
 #include <string>
 #include <memory>
 #include <vector>
-#include "structs.hpp"
-#include "Set.hpp"
+#include "include/structs.hpp"
+#include "include/Set.hpp"
 
 
 
