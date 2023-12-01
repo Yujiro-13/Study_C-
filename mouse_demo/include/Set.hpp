@@ -15,20 +15,14 @@
 #include "structs.hpp"
 
 
-class Set { //set task
-    public:
-        void call_main_task_1(Base_task *task);
-        void set_main_task_1(uint8_t _mode);
-        void get_main_task_1(uint8_t _mode_num);
-        void set_param(Base_task *task);
-    private:
-        uint8_t max_mode_num = 8;
-        std::shared_ptr<t_motion> param;
-        std::shared_ptr<t_motion_val> val;
-        std::shared_ptr<t_control> ctl;
-        std::shared_ptr<t_wall_sens> sens;
-        std::shared_ptr<t_local_dir> dir;
+void call_main_task_1(Base_task *task);
+void set_main_task_1(uint8_t _mode);
+void get_main_task_1(uint8_t _mode_num);
+void set_param(Base_task *task);
+
+
+
         
-};
+
 
 #endif

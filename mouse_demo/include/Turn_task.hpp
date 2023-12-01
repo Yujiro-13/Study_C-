@@ -16,10 +16,6 @@ class Turn_task : public Base_task{
         virtual int turn_right() override;
     
     protected:
-        float deg;
-        float ang_vel;
-        float max_ang_vel;
-        float end_ang_vel;
         float local_deg;
         //t_local_dir Turn_flag;
 };

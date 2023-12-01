@@ -9,7 +9,7 @@
 
 
 int  main(){
-    Set set;
+    
     
     int _mode;
     
@@ -17,7 +17,7 @@ int  main(){
     std::cin >> _mode;
 
    
-    set.get_main_task_1(_mode);
+    get_main_task_1(_mode);
 
     
 
