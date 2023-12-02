@@ -12,23 +12,30 @@ int Turn_task::main_task_1() {
 int Turn_task::turn_left() {
     
     w_sens.enable = FALSE;
-    motion.flag = RIGHT;
+    motion.flag = LEFT;
 
-    m_val.tar.ang_vel = set_v->tar.ang_vel;
+    m_val.max.ang_vel = set_v->tar.ang_vel;
     motion.ang_acc = set_m->ang_acc;
     
 
 
-    local_deg = set_m->deg;
-    while((set_v->tar.deg - (motion.deg - local_deg)) > (m_val.tar.ang_vel * m_val.tar.ang_vel) / (2.0 * set_m->ang_acc)){
-        calc_ang();
-        std::cout << "motion.deg : " << motion.deg << std::endl;
+    local_rad = motion.rad;
+    while((set_v->tar.rad - (motion.rad - local_rad)) > (m_val.tar.ang_vel * m_val.tar.ang_vel) / (2.0 * set_m->ang_acc)){
+        calc_target();
+        calc_l = ((set_v->tar.rad - local_rad) - motion.rad);
+        calc_r = (m_val.tar.ang_vel * m_val.tar.ang_vel) / (2.0 * set_m->ang_acc);
+        std::cout << "calc_l : " << calc_l << std::endl;
+        std::cout << "calc_r : " << calc_r << std::endl;
+        std::cout << "motion.rad : " << motion.rad << std::endl;
 
     }
+
+    std::cout << "##### deceleration #####" << std::endl;
+
     motion.ang_acc = -(set_m->ang_acc);
-    while(set_v->tar.deg > (motion.deg - local_deg)){
-        calc_ang();
-        std::cout << "motion.deg : " << motion.deg << std::endl;
+    while(set_v->tar.rad > (motion.rad - local_rad)){
+        calc_target();
+        std::cout << "motion.rad : " << motion.rad << std::endl;
     }
 
     
@@ -41,13 +48,13 @@ int Turn_task::turn_right() {
     set_s->enable = FALSE;
     set_m->flag = LEFT;
     
-    local_deg = set_m->deg;
-    while((set_v->tar.deg - (set_m->deg - local_deg)) > (set_v->tar.ang_vel * set_v->tar.ang_vel) / (2.0 * set_m->ang_acc)){
+    local_rad = set_m->deg;
+    while((set_v->tar.deg - (set_m->deg - local_rad)) > (set_v->tar.ang_vel * set_v->tar.ang_vel) / (2.0 * set_m->ang_acc)){
         std::cout << "set_m->deg : " << set_m->deg << std::endl;
 
     }
     set_m->ang_acc = -(set_m->ang_acc);
-    while(set_v->tar.deg > (set_m->deg - local_deg)){
+    while(set_v->tar.deg > (set_m->deg - local_rad)){
         std::cout << "set_m->deg : " << set_m->deg << std::endl;
     }
 

@@ -65,6 +65,7 @@ typedef struct
     float vel;  //velocity
     float ang_vel;  //angular velocity
     float deg;  //degree
+    float rad;  //radian
     float error; //error
     float ang_error;    //angular error
     float acc;  //acceleration

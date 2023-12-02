@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <math.h>
 #include "Base_task.hpp"
 #include "Search_task.hpp"
 #include "Run_task.hpp" // 各タスクを追加

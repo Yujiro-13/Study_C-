@@ -26,10 +26,10 @@ void set_param(Base_task *task){
     std::shared_ptr<t_wall_sens> sens = std::make_shared<t_wall_sens>();
 
     param->acc = 1.0;
-    param->ang_acc = 1.0;
+    param->ang_acc = M_PI * 4.0;
     val->tar.vel = 0.3;
-    val->tar.ang_vel = 0;
-    val->tar.deg = 90;
+    val->tar.ang_vel = M_PI;
+    val->tar.rad = M_PI / 2.0;
     val->tar.len = 90;
     val->max.vel = 0.3;
     val->max.ang_vel = 0;

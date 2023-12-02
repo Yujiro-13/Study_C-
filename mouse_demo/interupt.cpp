@@ -44,6 +44,12 @@ void calc_target(){
 
     motion.len += m_val.tar.vel;
 
+    std::cout << "motion.len : " << motion.len << std::endl;
+
+    std::cout << "m_val.tar.ang_vel : " << m_val.tar.ang_vel << std::endl;
+    std::cout << "m_val.max.ang_vel : " << m_val.max.ang_vel << std::endl;
+    std::cout << "motion.ang_acc : " << motion.ang_acc << std::endl;
+
     m_val.tar.ang_vel += (motion.ang_acc) / 1000.0;
     
     if (motion.flag == LEFT)
@@ -55,8 +61,9 @@ void calc_target(){
             m_val.tar.ang_vel = m_val.max.ang_vel;
         }
 
-        motion.deg += m_val.tar.ang_vel;
-    }else if (motion.flag == RIGHT)
+        motion.rad += m_val.tar.ang_vel;
+    }
+    else if (motion.flag == RIGHT)
     {
 
         if (m_val.tar.ang_vel < m_val.max.ang_vel)
@@ -65,10 +72,11 @@ void calc_target(){
         }
 
     }
+
+    std::cout << "motion.rad : " << motion.rad << std::endl;
     
 
-    std::cout << "motion.len : " << motion.len << std::endl;
-
+    
     return;
 }
 void wall_ctl(){
