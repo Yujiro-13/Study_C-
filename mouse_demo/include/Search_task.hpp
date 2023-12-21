@@ -14,13 +14,8 @@ class Search_task : public Base_task{
         virtual int main_task_1() override;
         virtual int search() override;
         
-    
     protected:
-        float vel;
-        float acc;
-        float ang_vel;
-        float max_vel;
-        float end_vel;
+        
 };
 
 #endif

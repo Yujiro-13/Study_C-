@@ -18,6 +18,14 @@ typedef enum
     UNDEFINED,
 }t_local_dir;
 
+typedef enum
+{
+    NORTH = 0,
+    EAST = 1,
+    SOUTH = 2,
+    WEST = 3,
+}t_global_dir;
+
 typedef struct 
 {
     int f;  //front
