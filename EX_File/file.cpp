@@ -6,90 +6,75 @@
 
 struct t_wall
 {
-    bool north;
-    bool east;
-    bool south;
-    bool west;
+    unsigned char north : 2;
+    unsigned char east : 2;
+    unsigned char south : 2;
+    unsigned char west : 2;
 };
 
 struct t_map
 {
-    t_wall wall[MAZESIZE_X][MAZESIZE_Y] = {0};
+    t_wall wall[MAZESIZE_X][MAZESIZE_Y];
 };
 
 const char* MAP_FILE_PATH = "map.txt";
 
-void map_write(t_map *map)
+void map_write(t_map* map)
 {
-    std::ofstream ofile(MAP_FILE_PATH, std::ios::out);
+    std::ofstream ofile(MAP_FILE_PATH, std::ios::out | std::ios::binary);
     if (ofile.fail())
     {
         std::cerr << "Failed to open " << MAP_FILE_PATH << " for writing" << std::endl;
         return;
     }
 
-    for (int i = 0; i < MAZESIZE_X; i++)
-    {
-        for (int j = 0; j < MAZESIZE_Y; j++)
-        {
-            ofile << map->wall[i][j].north << " ";
-            ofile << map->wall[i][j].east << " ";
-            ofile << map->wall[i][j].south << " ";
-            ofile << map->wall[i][j].west << " ";
-        }
-        ofile << std::endl;
-    }
+    ofile.write(reinterpret_cast<const char*>(map), sizeof(t_map));
 
     ofile.close();
 }
 
-void map_read(t_map *map)
+t_map map_read()
 {
-    std::ifstream ifile(MAP_FILE_PATH, std::ios::in);
+    t_map map;
+    std::ifstream ifile(MAP_FILE_PATH, std::ios::in | std::ios::binary);
     if (ifile.fail())
     {
         std::cerr << "Failed to open " << MAP_FILE_PATH << " for reading" << std::endl;
-        return;
+        return map;
     }
 
-    for (int i = 0; i < MAZESIZE_X; i++)
-    {
-        for (int j = 0; j < MAZESIZE_Y; j++)
-        {
-            ifile >> map->wall[i][j].north;
-            ifile >> map->wall[i][j].east;
-            ifile >> map->wall[i][j].south;
-            ifile >> map->wall[i][j].west;
-        }
-    }
+    ifile.read(reinterpret_cast<char*>(&map), sizeof(t_map));
 
     ifile.close();
 
-    std::cout << "map->wall[0][0].north: " << map->wall[0][0].north << std::endl;
-    std::cout << "map->wall[0][0].east: " << map->wall[0][0].east << std::endl;
-    std::cout << "map->wall[0][0].south: " << map->wall[0][0].south << std::endl;
-    std::cout << "map->wall[0][0].west: " << map->wall[0][0].west << std::endl;
-    std::cout << "map->wall[11][26].north: " << map->wall[11][26].north << std::endl;
-    std::cout << "map->wall[14][18].east: " << map->wall[14][18].east << std::endl;
-    std::cout << "map->wall[4][31].south: " << map->wall[4][31].south << std::endl;
-    std::cout << "map->wall[25][8].west: " << map->wall[25][8].west << std::endl;
+    // 以下はデバッグ用の出力
+    std::cout << "map->wall[0][0].north: " << static_cast<int>(map.wall[0][0].north) << std::endl;
+    std::cout << "map->wall[0][0].east: " << static_cast<int>(map.wall[0][0].east) << std::endl;
+    std::cout << "map->wall[0][0].south: " << static_cast<int>(map.wall[0][0].south) << std::endl;
+    std::cout << "map->wall[0][0].west: " << static_cast<int>(map.wall[0][0].west) << std::endl;
+    std::cout << "map->wall[11][26].north: " << static_cast<int>(map.wall[11][26].north) << std::endl;
+    std::cout << "map->wall[14][18].east: " << static_cast<int>(map.wall[14][18].east) << std::endl;
+    std::cout << "map->wall[4][31].south: " << static_cast<int>(map.wall[4][31].south) << std::endl;
+    std::cout << "map->wall[25][8].west: " << static_cast<int>(map.wall[25][8].west) << std::endl;
+
+    return map;
 }
 
 int main()
 {
     t_map myMap;
 
-    myMap.wall[0][0].north = false;
-    myMap.wall[0][0].east = true;
-    myMap.wall[0][0].south = true;
-    myMap.wall[0][0].west = true;
-    myMap.wall[11][26].north = true;
-    myMap.wall[14][18].east = true;
-    myMap.wall[4][31].south = true;
-    myMap.wall[25][8].west = true;
+    myMap.wall[0][0].north = 0;
+    myMap.wall[0][0].east = 1;
+    myMap.wall[0][0].south = 1;
+    myMap.wall[0][0].west = 1;
+    myMap.wall[11][26].north = 0;
+    myMap.wall[14][18].east = 1;
+    myMap.wall[4][31].south = 0;
+    myMap.wall[25][8].west = 1;
 
     map_write(&myMap);
-    map_read(&myMap);
+    myMap = map_read();
 
     // Now, 'myMap' contains the data read from the file.
 
